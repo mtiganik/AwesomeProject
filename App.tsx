@@ -1,103 +1,44 @@
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React, { useState } from 'react';
+import {StyleSheet,Text,View} from 'react-native';
+import Header from './src/components/Header';
+import UserDataInput from './src/components/UserDataInput';
+import PizzaDataInput from './src/components/PizzaDataInput';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+const[pizzaState, setPizzaState] = useState({
+  personCount: 1,
+  onePersonEats: 150,
+  newPizzaDiameter: 24, 
+  newPizzaPrice: 15.75,
+  calculatedPizzas: []
+})
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+<View style={styles.container}>
+  <View style={{flex: 1,flexGrow: 1,}}>
+          <Header/>
+    <UserDataInput/>
+    <UserDataInput/>
+    <PizzaDataInput/>
     </View>
-  );
-}
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit123456 <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+  <View style={{
+          flex: 1,
+          flexGrow: 1,
+        }}>
+    <Text>{JSON.stringify(pizzaState, undefined, 4)}</Text>
+    </View>
+</View>
+);
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems:'center'
+},
 });
 
 export default App;
